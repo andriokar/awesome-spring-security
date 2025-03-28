@@ -1,10 +1,10 @@
-package com.andriokar.security;
+package com.workshop.andriokar;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class SecurityApplicationTests {
+class AndriokarApplicationTests {
 
 	@Test
 	void contextLoads() {
