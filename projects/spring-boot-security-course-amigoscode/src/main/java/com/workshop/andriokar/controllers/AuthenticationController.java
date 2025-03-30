@@ -1,6 +1,7 @@
 package com.workshop.andriokar.controllers;
 
 import com.workshop.andriokar.configuration.JwtUtils;
+import com.workshop.andriokar.dao.UserDao;
 import com.workshop.andriokar.dto.AuthenticationRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +21,7 @@ public class AuthenticationController {
 
     private final AuthenticationManager authenticationManager;
 
-    private final UserDetailsService userDetailsService;
+    private final UserDao userDao;
 
     private final JwtUtils jwtUtils;
 
@@ -35,7 +36,7 @@ public class AuthenticationController {
                 )
         );
 
-        final UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getEmail());
+        final UserDetails userDetails = userDao.findUserByEmail(authenticationRequest.getEmail());
 
         if (userDetails != null) {
             return ResponseEntity.ok(jwtUtils.generateToken(userDetails));

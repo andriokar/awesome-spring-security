@@ -1,5 +1,6 @@
 package com.workshop.andriokar.configuration;
 
+import com.workshop.andriokar.dao.UserDao;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -8,7 +9,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -21,7 +21,7 @@ import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 @RequiredArgsConstructor
 public class JwtAuthFilter extends OncePerRequestFilter {
 
-    private final UserDetailsService userDetailsService;
+    private final UserDao userDao;
 
     private final JwtUtils jwtUtils;
 
@@ -45,7 +45,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         userEmail = jwtUtils.extractUsername(jwtToken);
 
         if (userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-            UserDetails userDetails = userDetailsService.loadUserByUsername(userEmail);
+            UserDetails userDetails = userDao.findUserByEmail(userEmail);
 
             if (jwtUtils.validateToken(jwtToken, userDetails)) {
                 UsernamePasswordAuthenticationToken authenticationToken =
