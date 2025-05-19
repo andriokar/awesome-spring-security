@@ -3,13 +3,13 @@ package com.andriokar.springsecex.entities;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 
-@Entity
+@Entity(name = "users")
 public class User {
 
     @Id
     private Integer id;
 
-    private String username;
+    private String userName;
 
     private String password;
 
@@ -18,7 +18,7 @@ public class User {
 
     public User(Integer id, String username, String password) {
         this.id = id;
-        this.username = username;
+        this.userName = username;
         this.password = password;
     }
 
@@ -31,11 +31,11 @@ public class User {
     }
 
     public String getUsername() {
-        return username;
+        return userName;
     }
 
     public void setUsername(String username) {
-        this.username = username;
+        this.userName = username;
     }
 
     public String getPassword() {
@@ -50,7 +50,7 @@ public class User {
     public String toString() {
         return "User{" +
                 "id=" + id +
-                ", username='" + username + '\'' +
+                ", username='" + userName + '\'' +
                 ", password='" + password + '\'' +
                 '}';
     }
